@@ -83,11 +83,14 @@ function App({
 
 	const onSongCorrect = useCallback(
 		(songId: SongId, songData: Song) => {
-			// Speedrun matches fire rapidly and don't pause for a melody, so the confirmation is
-			// played quieter to keep it from being grating.
-			playSound(audioSystem, audioBuffers.current["song-correct"], {
-				gain: mode === "speedrun" ? 0.25 : 0.5,
-			});
+			// The match-confirmation chime, unless the player has toggled it off in settings.
+			// Speedrun matches fire rapidly and don't pause for a melody, so it's played quieter
+			// to keep it from being grating.
+			if (settings.songMatchSound) {
+				playSound(audioSystem, audioBuffers.current["song-correct"], {
+					gain: mode === "speedrun" ? 0.25 : 0.5,
+				});
+			}
 			// A song using the A note proves the player has found the A control, so we can stop
 			// hinting the controls on future visits.
 			if (songData.notes.includes("a")) {
@@ -101,7 +104,7 @@ function App({
 				setIsSongPlaying(true);
 			}
 		},
-		[audioSystem, mode, registerSong]
+		[audioSystem, mode, registerSong, settings.songMatchSound]
 	);
 
 	const onSongEnd = useCallback(() => {

@@ -12,6 +12,8 @@ import type {SvgComponent} from "@/util/svg";
 export type SettingValues = {
 	volume: number;
 	bgMovement: boolean;
+	// Whether the confirmation chime plays when a song is matched (Song/Speedrun modes).
+	songMatchSound: boolean;
 	keybindA: string;
 	keybindCUp: string;
 	keybindCDown: string;
@@ -51,8 +53,11 @@ export const keybindsToNotes: Record<NoteKeybindId, NoteName> = {
 // The static metadata describing how each setting is rendered, in display order.
 // Discriminating on `type` narrows `id`, which in turn types the value lookup, so
 // the modal can render and edit each control without a single cast.
+// Ids of the boolean (toggle) settings. Kept as its own union so a new toggle only needs adding
+// here and to `SettingValues` for the discriminated field type to accept it.
+export type ToggleId = "bgMovement" | "songMatchSound";
 type SliderField = {readonly type: "slider"; readonly id: "volume"; readonly default: number};
-type ToggleField = {readonly type: "toggle"; readonly id: "bgMovement"; readonly default: boolean};
+type ToggleField = {readonly type: "toggle"; readonly id: ToggleId; readonly default: boolean};
 type KeybindField = {
 	readonly type: "keybind";
 	readonly id: KeybindId;
@@ -70,6 +75,12 @@ export const settingFields: readonly SettingField[] = [
 		name: "Volume",
 		type: "slider",
 		default: 0.25,
+	},
+	{
+		id: "songMatchSound",
+		name: "Song Match Sound",
+		type: "toggle",
+		default: true,
 	},
 	{
 		id: "bgMovement",
