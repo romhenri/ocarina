@@ -3,6 +3,7 @@ import CDown from "@/images/buttons/c-down.svg?react";
 import CLeft from "@/images/buttons/c-left.svg?react";
 import CRight from "@/images/buttons/c-right.svg?react";
 import CUp from "@/images/buttons/c-up.svg?react";
+import type {NoteName} from "@/data/song-data";
 import type {SvgComponent} from "@/util/svg";
 
 // The mutable settings the user can change, as a typed map. Reading a value is a
@@ -36,6 +37,16 @@ export type BendKeybindId =
 	| "keybindBendSemiUp"
 	| "keybindBendWholeUp";
 export type KeybindId = NoteKeybindId | BendKeybindId | "keybindVibrato" | "keybindSpeedrunReset";
+
+// The note each configurable note-key plays. Shared by every input engine (the ocarina playback
+// engine and the Hero rhythm mode) so key→note mapping lives in exactly one place.
+export const keybindsToNotes: Record<NoteKeybindId, NoteName> = {
+	keybindA: "a",
+	keybindCUp: "u",
+	keybindCDown: "d",
+	keybindCLeft: "l",
+	keybindCRight: "r",
+};
 
 // The static metadata describing how each setting is rendered, in display order.
 // Discriminating on `type` narrows `id`, which in turn types the value lookup, so

@@ -6,6 +6,7 @@ const modeLabels: Record<Mode, string> = {
 	song: "Songs",
 	free: "Free",
 	speedrun: "Speedrun",
+	hero: "Hero",
 };
 
 const pillClass =

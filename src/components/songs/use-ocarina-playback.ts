@@ -1,6 +1,6 @@
 import {Instrument} from "@/data/instrument-data";
 import {NoteName, NoteObject, Song, SongId, songs} from "@/data/song-data";
-import {normalizeKey, NoteKeybindId, SettingValues} from "@/settings/setting-fields";
+import {keybindsToNotes, normalizeKey, NoteKeybindId, SettingValues} from "@/settings/setting-fields";
 import {AudioBuffers, AudioSystem, fadeOutSource, playSound, Sound} from "@/util/audio";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {useMatchedSongPlayback} from "./use-matched-song-playback";
@@ -10,14 +10,6 @@ const liveNoteFadeDuration = 0.3;
 // The longest song is 8 notes, so the box never needs to show more. The player NoteBox also reserves
 // exactly this many note slots so its layout (and the gap between notes) doesn't shift with the count.
 export const maxVisibleNotes = 8;
-
-const keybindsToNotes: Record<NoteKeybindId, NoteName> = {
-	keybindA: "a",
-	keybindCUp: "u",
-	keybindCDown: "d",
-	keybindCLeft: "l",
-	keybindCRight: "r",
-};
 
 // The single sounding key-input note. Owned here so the engine can fade it out and the pitch
 // modifiers (which read this same ref) can bend/vibrato it — one source of truth instead of two.

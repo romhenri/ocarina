@@ -10,6 +10,8 @@
 	--animate-highlighted: highlighted-animation 3s linear infinite;
 	--animate-flashing: flashing 0.66s linear infinite;
 	--animate-note-add: note-add 0.3s forwards;
+	--animate-hero-pop: hero-pop 0.35s cubic-bezier(0.2, 1.5, 0.35, 1) both;
+	--animate-hero-target: hero-target 0.18s ease-out;
 }
 
 @font-face {
@@ -278,6 +280,38 @@
 
 	100% {
 		opacity: 1;
+	}
+}
+
+@keyframes hero-pop {
+	0% {
+		transform: translate(-50%, -50%) scale(0.4);
+		opacity: 0;
+	}
+
+	55% {
+		transform: translate(-50%, -50%) scale(1.25);
+		opacity: 1;
+	}
+
+	100% {
+		transform: translate(-50%, -50%) scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes hero-target {
+	0% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(0.82);
+		filter: brightness(1.6);
+	}
+
+	100% {
+		transform: scale(1);
 	}
 }
 

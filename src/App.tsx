@@ -5,6 +5,7 @@ import MetaModal from "@/components/meta-modal/MetaModal";
 import MobileSwitcherModal from "@/components/MobileSwitcherModal";
 import ModeSwitcher from "@/components/ModeSwitcher";
 import SongPlayer from "@/components/songs/SongPlayer";
+import HeroPlayer from "@/hero/HeroPlayer";
 import {InstrumentId, instruments} from "@/data/instrument-data";
 import {Song, SongId} from "@/data/song-data";
 import {Mode, SpeedrunSet} from "@/modes";
@@ -115,39 +116,50 @@ function App({
 				<Background isParallaxOn={!isTouch && settings.bgMovement} />
 				<main>
 					<h1 className="sr-only">Ocarina Player</h1>
-					<SongPlayer
-						isReady={!isLoadingScreenOpen}
-						settings={settings}
-						instrument={instruments[instrumentId]}
-						isTouch={isTouch}
-						isInputEnabled={
-							!isLoadingScreenOpen && !isMetaModalOpen && !speedrun.isInputLocked
-						}
-						mode={mode}
-						speedrunSet={speedrunSet}
-						playedSongIds={speedrun.playedSongIds}
-						onNotePress={speedrun.onNotePress}
-						runResetSignal={speedrun.runResetSignal}
-						onSongCorrect={onSongCorrect}
-						onSongEnd={onSongEnd}
-						audioSystem={audioSystem}
-						audioBuffers={audioBuffers}
-						header={
-							!isLoadingScreenOpen &&
-							mode === "speedrun" && (
-								<div className="mt-[12px]">
-									<SpeedrunTimer
-										{...speedrun.timerProps}
-										onReset={speedrun.reset}
-										resetKey={settings.keybindSpeedrunReset}
-										speedrunSet={speedrunSet}
-										onSelectSpeedrunSet={setSpeedrunSet}
-										isInputEnabled={!isMetaModalOpen}
-									/>
-								</div>
-							)
-						}
-					/>
+					{mode === "hero" ? (
+						<HeroPlayer
+							settings={settings}
+							instrument={instruments[instrumentId]}
+							isTouch={isTouch}
+							isInputEnabled={!isLoadingScreenOpen && !isMetaModalOpen}
+							audioSystem={audioSystem}
+							audioBuffers={audioBuffers}
+						/>
+					) : (
+						<SongPlayer
+							isReady={!isLoadingScreenOpen}
+							settings={settings}
+							instrument={instruments[instrumentId]}
+							isTouch={isTouch}
+							isInputEnabled={
+								!isLoadingScreenOpen && !isMetaModalOpen && !speedrun.isInputLocked
+							}
+							mode={mode}
+							speedrunSet={speedrunSet}
+							playedSongIds={speedrun.playedSongIds}
+							onNotePress={speedrun.onNotePress}
+							runResetSignal={speedrun.runResetSignal}
+							onSongCorrect={onSongCorrect}
+							onSongEnd={onSongEnd}
+							audioSystem={audioSystem}
+							audioBuffers={audioBuffers}
+							header={
+								!isLoadingScreenOpen &&
+								mode === "speedrun" && (
+									<div className="mt-[12px]">
+										<SpeedrunTimer
+											{...speedrun.timerProps}
+											onReset={speedrun.reset}
+											resetKey={settings.keybindSpeedrunReset}
+											speedrunSet={speedrunSet}
+											onSelectSpeedrunSet={setSpeedrunSet}
+											isInputEnabled={!isMetaModalOpen}
+										/>
+									</div>
+								)
+							}
+						/>
+					)}
 				</main>
 				{!isLoadingScreenOpen && (
 					<>
