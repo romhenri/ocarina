@@ -4,16 +4,19 @@ import LoadingScreen from "@/components/LoadingScreen";
 import MetaModal from "@/components/meta-modal/MetaModal";
 import MobileSwitcherModal from "@/components/MobileSwitcherModal";
 import ModeSwitcher from "@/components/ModeSwitcher";
+import ScenarioPicker from "@/components/ScenarioPicker";
 import SongPlayer from "@/components/songs/SongPlayer";
-import HeroPlayer from "@/hero/HeroPlayer";
 import {InstrumentId, instruments} from "@/data/instrument-data";
+import {getScenario} from "@/data/scenario-data";
 import {Song, SongId} from "@/data/song-data";
+import HeroPlayer from "@/hero/HeroPlayer";
 import {Mode, SpeedrunSet} from "@/modes";
 import {SettingValues} from "@/settings/setting-fields";
 import {
 	markHasPlayed,
 	saveInstrument,
 	saveMode,
+	saveScenario,
 	saveSettings,
 	saveSpeedrunSet,
 } from "@/settings/settings";
@@ -28,12 +31,14 @@ function App({
 	initialInstrumentId,
 	initialMode,
 	initialSpeedrunSet,
+	initialScenarioId,
 	hasPlayedBefore,
 }: {
 	initialSettings: SettingValues;
 	initialInstrumentId: InstrumentId;
 	initialMode: Mode;
 	initialSpeedrunSet: SpeedrunSet;
+	initialScenarioId: string;
 	hasPlayedBefore: boolean;
 }) {
 	const [settings, setSettings] = useState(initialSettings);
@@ -48,6 +53,8 @@ function App({
 	const [instrumentId, setInstrumentId] = useState<InstrumentId>(initialInstrumentId);
 	const [mode, setMode] = useState<Mode>(initialMode);
 	const [speedrunSet, setSpeedrunSet] = useState<SpeedrunSet>(initialSpeedrunSet);
+
+	const [scenarioId, setScenarioId] = useState(initialScenarioId);
 
 	const speedrun = useSpeedrun({mode, speedrunSet});
 	const {registerSong} = speedrun;
@@ -76,6 +83,10 @@ function App({
 	useEffect(() => {
 		saveMode(mode);
 	}, [mode]);
+
+	useEffect(() => {
+		saveScenario(scenarioId);
+	}, [scenarioId]);
 
 	useEffect(() => {
 		saveSpeedrunSet(speedrunSet);
@@ -116,7 +127,10 @@ function App({
 			{/* Everything behind the settings modal is made inert while it's open, so the focus trap
 			    is backed up against a screen-reader virtual cursor wandering out of the dialog. */}
 			<div inert={isMetaModalOpen}>
-				<Background isParallaxOn={!isTouch && settings.bgMovement} />
+				<Background
+					isParallaxOn={!isTouch && settings.bgMovement}
+					src={getScenario(scenarioId).src}
+				/>
 				<main>
 					<h1 className="sr-only">Ocarina Player</h1>
 					{mode === "hero" ? (
@@ -180,7 +194,10 @@ function App({
 							aria-label="Mode and instrument"
 							className="fixed top-0 left-0 z-[100] hidden flex-col items-start gap-[4px] p-[12px] pt-[calc(env(safe-area-inset-top)+12px)] pl-[calc(env(safe-area-inset-left)+12px)] select-none sm:flex"
 						>
-							<ModeSwitcher mode={mode} onSelectMode={setMode} />
+							<div className="flex items-start gap-[6px]">
+								<ModeSwitcher mode={mode} onSelectMode={setMode} />
+								<ScenarioPicker scenarioId={scenarioId} onSelect={setScenarioId} />
+							</div>
 							<InstrumentSwitcher
 								currentInstrumentId={instrumentId}
 								onSelect={setInstrumentId}

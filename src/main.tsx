@@ -4,6 +4,7 @@ import {
 	loadHasPlayed,
 	loadInstrument,
 	loadMode,
+	loadScenario,
 	loadSettings,
 	loadSpeedrunSet,
 } from "@/settings/settings";
@@ -25,6 +26,7 @@ ReactDOM.createRoot(rootElement).render(
 			initialInstrumentId={loadInstrument()}
 			initialMode={loadMode()}
 			initialSpeedrunSet={loadSpeedrunSet()}
+			initialScenarioId={loadScenario()}
 			hasPlayedBefore={loadHasPlayed()}
 		/>
 	</React.StrictMode>

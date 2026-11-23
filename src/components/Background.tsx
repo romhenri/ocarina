@@ -14,10 +14,13 @@ const fireflies = Array.from({length: 18}, (_, i) => ({
 	duration: `${5 + (i % 5)}s`,
 }));
 
-// Hyrule Field key art from the official OoT site assets.
-const src = "images/nintendo/OcarinaOfTime_BG_hyrule.jpg";
-
-export default function Background({isParallaxOn}: {isParallaxOn: boolean}) {
+export default function Background({
+	isParallaxOn,
+	src,
+}: {
+	isParallaxOn: boolean;
+	src: string;
+}) {
 	const [springs] = useSpring(
 		() => ({
 			x: 0,

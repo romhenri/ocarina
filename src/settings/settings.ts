@@ -1,4 +1,5 @@
 import {defaultInstrumentId, InstrumentId, instruments} from "@/data/instrument-data";
+import {defaultScenarioId, scenarioIds} from "@/data/scenario-data";
 import {Mode, modeOrder, SpeedrunSet, speedrunSetOrder} from "@/modes";
 import {defaultSettingValues, keybindIds, normalizeKey, SettingValues} from "./setting-fields";
 import {loadEnum, loadFlag, loadJson, saveJson, saveString, setFlag} from "./storage";
@@ -8,6 +9,7 @@ const HAS_PLAYED_KEY = "hasPlayedBefore";
 const INSTRUMENT_KEY = "instrument";
 const MODE_KEY = "mode";
 const SPEEDRUN_SET_KEY = "speedrunSet";
+const SCENARIO_KEY = "scenario";
 
 const instrumentIds = Object.keys(instruments) as InstrumentId[];
 
@@ -44,6 +46,14 @@ export function loadSpeedrunSet(): SpeedrunSet {
 
 export function saveSpeedrunSet(set: SpeedrunSet) {
 	saveString(SPEEDRUN_SET_KEY, set);
+}
+
+export function loadScenario(): string {
+	return loadEnum(SCENARIO_KEY, scenarioIds, defaultScenarioId);
+}
+
+export function saveScenario(id: string) {
+	saveString(SCENARIO_KEY, id);
 }
 
 export function loadHasPlayed() {
