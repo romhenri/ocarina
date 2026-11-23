@@ -17,9 +17,11 @@ const fireflies = Array.from({length: 18}, (_, i) => ({
 export default function Background({
 	isParallaxOn,
 	src,
+	filterOpacity,
 }: {
 	isParallaxOn: boolean;
 	src: string;
+	filterOpacity: number;
 }) {
 	const [springs] = useSpring(
 		() => ({
@@ -74,8 +76,10 @@ export default function Background({
 				src={src}
 			/>
 			{/* Darken and warm the photo so panels and text stay readable on top of it. */}
-			<div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_45%,rgba(0,0,0,0.05),rgba(10,7,3,0.7))]" />
-			<div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,7,3,0.15),rgba(10,7,3,0.55))]" />
+			<div className="absolute inset-0" style={{opacity: filterOpacity}}>
+				<div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_45%,rgba(0,0,0,0.05),rgba(10,7,3,0.7))]" />
+				<div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,7,3,0.15),rgba(10,7,3,0.55))]" />
+			</div>
 			{fireflies.map((style, i) => (
 				<span
 					key={i}

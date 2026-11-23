@@ -11,6 +11,8 @@ import type {SvgComponent} from "@/util/svg";
 // no casts. This is also exactly the shape we persist to localStorage.
 export type SettingValues = {
 	volume: number;
+	// Opacity of the darkening filter over the background (0 = raw image, 1 = full dim).
+	bgFilter: number;
 	bgMovement: boolean;
 	// Whether the confirmation chime plays when a song is matched (Song/Speedrun modes).
 	songMatchSound: boolean;
@@ -56,7 +58,7 @@ export const keybindsToNotes: Record<NoteKeybindId, NoteName> = {
 // Ids of the boolean (toggle) settings. Kept as its own union so a new toggle only needs adding
 // here and to `SettingValues` for the discriminated field type to accept it.
 export type ToggleId = "bgMovement" | "songMatchSound";
-type SliderField = {readonly type: "slider"; readonly id: "volume"; readonly default: number};
+type SliderField = {readonly type: "slider"; readonly id: "volume" | "bgFilter"; readonly default: number};
 type ToggleField = {readonly type: "toggle"; readonly id: ToggleId; readonly default: boolean};
 type KeybindField = {
 	readonly type: "keybind";
@@ -75,6 +77,12 @@ export const settingFields: readonly SettingField[] = [
 		name: "Volume",
 		type: "slider",
 		default: 0.25,
+	},
+	{
+		id: "bgFilter",
+		name: "Background Filter",
+		type: "slider",
+		default: 0.5,
 	},
 	{
 		id: "songMatchSound",

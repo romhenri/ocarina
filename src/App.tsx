@@ -130,6 +130,7 @@ function App({
 				<Background
 					isParallaxOn={!isTouch && settings.bgMovement}
 					src={getScenario(scenarioId).src}
+					filterOpacity={settings.bgFilter}
 				/>
 				<main>
 					<h1 className="sr-only">Ocarina Player</h1>

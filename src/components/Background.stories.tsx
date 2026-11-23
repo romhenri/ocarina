@@ -6,7 +6,7 @@ const meta = {
 	title: "Scenery/Background",
 	component: Background,
 	parameters: {fill: true},
-	args: {isParallaxOn: true, src: getScenario("hyrule").src},
+	args: {isParallaxOn: true, src: getScenario("hyrule").src, filterOpacity: 1},
 } satisfies Meta<typeof Background>;
 
 export default meta;
