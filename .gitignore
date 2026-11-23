@@ -32,3 +32,19 @@ storybook-static
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# Nintendo assets: ignore the folder, keep only the files the app references.
+/public/images/nintendo/*
+!/public/images/nintendo/OcarinaOfTime_BG_courage.jpg
+!/public/images/nintendo/OcarinaOfTime_BG_hyrule.jpg
+!/public/images/nintendo/OcarinaOfTime_BG_ornament_black.jpg
+!/public/images/nintendo/OcarinaOfTime_deco_line_gold_*.png
+!/public/images/nintendo/OcarinaOfTime_frame_carousel_corner_*.png
+!/public/images/nintendo/screenshots/
+/public/images/nintendo/screenshots/*
+!/public/images/nintendo/screenshots/TheLegendOfZeldaOcarinaOfTime_08*
+!/public/images/nintendo/screenshots/TheLegendOfZeldaOcarinaOfTime_33*
+!/public/images/nintendo/screenshots/TheLegendOfZeldaOcarinaOfTime_36*
+!/public/images/nintendo/screenshots/TheLegendOfZeldaOcarinaOfTime_40*
+!/public/images/nintendo/screenshots/TheLegendOfZeldaOcarinaOfTime_41*
+!/public/images/nintendo/screenshots/TheLegendOfZeldaOcarinaOfTime_47*
