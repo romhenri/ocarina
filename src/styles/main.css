@@ -12,6 +12,16 @@
 	--animate-note-add: note-add 0.3s forwards;
 	--animate-hero-pop: hero-pop 0.35s cubic-bezier(0.2, 1.5, 0.35, 1) both;
 	--animate-hero-target: hero-target 0.18s ease-out;
+	--animate-firefly: firefly 6s ease-in-out infinite;
+
+	/* Hyrule palette (OoT remake site look). `black` is retinted warm so every bg-black/xx panel reads as aged leather, not void. */
+	--color-black: #0d0a06;
+	--color-moss: #1f170e;
+	--color-leaf: #d9a93f;
+	--color-leaf-glow: #f5dc94;
+	--color-gold: #e3bd62;
+	--color-gold-deep: #b98d3c;
+	--color-firefly: #f3efa0;
 }
 
 @font-face {
@@ -36,7 +46,7 @@
 
 	body {
 		margin: 0;
-		background-color: black;
+		background-color: #0d0a06;
 		min-height: 100dvh;
 	}
 
@@ -58,7 +68,7 @@
 	}
 
 	::-webkit-scrollbar-thumb {
-		background-color: #888;
+		background-color: #8a6a35;
 	}
 
 	img,
@@ -82,7 +92,7 @@
 	/* `all: unset` above (and the range/anchor resets) strip the default focus ring, so restore a
 	   visible one for keyboard users. Scoped to :focus-visible so pointer interaction stays clean. */
 	:where(button, a, input, [tabindex]):focus-visible {
-		outline: 2px solid #fff;
+		outline: 2px solid var(--color-gold);
 		outline-offset: 2px;
 	}
 
@@ -121,8 +131,8 @@
 		appearance: none;
 		width: 100%;
 		height: 6px;
-		background: #969aa1;
-		background-image: linear-gradient(#3280fe, #3280fe);
+		background: #3d3020;
+		background-image: linear-gradient(var(--color-leaf), var(--color-leaf));
 		background-size: var(--value) 100%;
 		background-repeat: no-repeat;
 		border-radius: 99999px;
@@ -133,12 +143,12 @@
 		appearance: none;
 		width: 100%;
 		height: 6px;
-		background: #969aa1;
+		background: #3d3020;
 		border-radius: 99999px;
 	}
 
 	input[type="range"]::-moz-range-progress {
-		background: #3280fe;
+		background: var(--color-leaf);
 		height: 6px;
 		border-radius: 99999px;
 	}
@@ -157,7 +167,7 @@
 	}
 
 	input[type="range"]::-webkit-slider-thumb:hover {
-		background: #3280fe;
+		background: var(--color-leaf);
 	}
 
 	input[type="range"]::-moz-range-thumb {
@@ -174,13 +184,41 @@
 	}
 
 	input[type="range"]:hover::-webkit-slider-thumb {
-		filter: drop-shadow(0 0 6px #3280fe);
-		background: #3280fe;
+		filter: drop-shadow(0 0 6px var(--color-leaf));
+		background: var(--color-leaf);
 	}
 
 	input[type="range"]:hover::-moz-range-thumb {
-		filter: drop-shadow(0 0 6px #3280fe);
-		background: #3280fe;
+		filter: drop-shadow(0 0 6px var(--color-leaf));
+		background: var(--color-leaf);
+	}
+}
+
+@keyframes firefly {
+	0%,
+	100% {
+		transform: translate(0, 0);
+		opacity: 0;
+	}
+
+	20% {
+		opacity: 1;
+	}
+
+	50% {
+		transform: translate(24px, -36px);
+		opacity: 0.35;
+	}
+
+	80% {
+		opacity: 1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animate-firefly {
+		animation: none;
+		opacity: 0.6;
 	}
 }
 
@@ -242,20 +280,20 @@
 @keyframes highlighted-animation {
 	0% {
 		box-shadow:
-			0 0 calc(var(--height) * 0.05) rgba(1, 80, 201, 0.8),
-			0 0 calc(var(--height) * 0.1) rgba(1, 80, 201, 0.8);
+			0 0 calc(var(--height) * 0.05) rgba(227, 189, 98, 0.7),
+			0 0 calc(var(--height) * 0.1) rgba(227, 189, 98, 0.7);
 	}
 
 	50% {
 		box-shadow:
-			0 0 calc(var(--height) * 0.1) #0150c9,
-			0 0 calc(var(--height) * 0.2) #0150c9;
+			0 0 calc(var(--height) * 0.1) #e3bd62,
+			0 0 calc(var(--height) * 0.2) #e3bd62;
 	}
 
 	100% {
 		box-shadow:
-			0 0 calc(var(--height) * 0.05) rgba(1, 80, 201, 0.8),
-			0 0 calc(var(--height) * 0.1) rgba(1, 80, 201, 0.8);
+			0 0 calc(var(--height) * 0.05) rgba(227, 189, 98, 0.7),
+			0 0 calc(var(--height) * 0.1) rgba(227, 189, 98, 0.7);
 	}
 }
 
@@ -316,6 +354,23 @@
 }
 
 @layer components {
+	/* Black ornament panel with gold carousel-frame corners, from the official OoT site assets. */
+	.forest-panel {
+		--corner: 64px;
+		background:
+			url("/images/nintendo/OcarinaOfTime_frame_carousel_corner_top_left.png") top left / var(--corner) auto no-repeat,
+			url("/images/nintendo/OcarinaOfTime_frame_carousel_corner_top_right.png") top right / var(--corner) auto no-repeat,
+			url("/images/nintendo/OcarinaOfTime_frame_carousel_corner_bottom_left.png") bottom left / var(--corner) auto no-repeat,
+			url("/images/nintendo/OcarinaOfTime_frame_carousel_corner_bottom_right.png") bottom right / var(--corner) auto no-repeat,
+			linear-gradient(160deg, rgba(40, 30, 16, 0.35), rgba(0, 0, 0, 0.55)),
+			url("/images/nintendo/OcarinaOfTime_BG_ornament_black.jpg") center / 412px,
+			#0d0a06;
+		box-shadow:
+			inset 0 0 0 1px rgba(227, 189, 98, 0.35),
+			inset 0 0 28px rgba(0, 0, 0, 0.7),
+			0 10px 28px rgba(0, 0, 0, 0.6);
+	}
+
 	.new-record-text {
 		display: inline-block;
 		background: linear-gradient(
@@ -361,4 +416,13 @@
 		transform: scale(1);
 		opacity: 1;
 	}
+}
+
+/* Official gold deco line: fixed end caps over a repeating middle. */
+@utility deco-line-gold {
+	height: 14px;
+	background:
+		url("/images/nintendo/OcarinaOfTime_deco_line_gold_left.png") left center / auto 100% no-repeat,
+		url("/images/nintendo/OcarinaOfTime_deco_line_gold_right.png") right center / auto 100% no-repeat,
+		url("/images/nintendo/OcarinaOfTime_deco_line_gold_middle.png") center / auto 100% repeat-x;
 }

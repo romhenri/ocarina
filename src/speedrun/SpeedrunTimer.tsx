@@ -119,7 +119,7 @@ export default function SpeedrunTimer({
 	}, [isInputEnabled, resetKey, requestReset]);
 
 	return (
-		<div className="relative z-[90] flex w-fit min-w-52 flex-col items-center gap-2 rounded-[16px] bg-black/55 px-4 py-2 text-white select-none">
+		<div className="relative z-[90] flex w-fit min-w-52 flex-col items-center gap-2 rounded-[3px] forest-panel px-4 py-2 text-white select-none">
 			<span className="text-xl leading-none font-bold tracking-[0.06em] tabular-nums">
 				{formatSpeedrunTime(elapsed)}
 			</span>

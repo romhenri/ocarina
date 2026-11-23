@@ -52,9 +52,9 @@ function SpeedrunNoteBox({
 	return (
 		<div
 			className={clsx(
-				"flex flex-row-reverse items-center justify-between gap-[10px] rounded-[12px] bg-black/72 px-[12px] py-[8px] transition-[box-shadow,outline,opacity,transform] duration-300 [outline-color:transparent]",
+				"flex flex-row-reverse items-center justify-between gap-[10px] rounded-[3px] forest-panel px-[12px] py-[8px] transition-[box-shadow,outline,opacity,transform] duration-300 [outline-color:transparent]",
 				className,
-				isHighlighted && "z-[1] animate-highlighted [outline:1px_solid_#3280fe]",
+				isHighlighted && "z-[1] animate-highlighted [outline:1px_solid_var(--color-gold)]",
 				isPlayed && "opacity-40"
 			)}
 		>
@@ -92,13 +92,13 @@ function StaffNoteBox({
 	return (
 		<div
 			className={clsx(
-				"relative h-(--height) isolate rounded-[calc(var(--height)*0.1923)] bg-black/72 transition-[box-shadow,outline,transform] duration-300 [outline-color:transparent]",
+				"relative h-(--height) isolate rounded-[3px] forest-panel transition-[box-shadow,outline,transform] duration-300 [outline-color:transparent]",
 				rootByVariant[variant],
 				variant === "sheet" && sheetHeightClass(isTouch),
 				variant === "player" && !isTouch && playerDesktopClass,
 				className,
 				isHighlighted &&
-					"z-[1] animate-highlighted sm:scale-[1.03] [outline:calc(var(--height)*0.01)_solid_#3280fe]"
+					"z-[1] animate-highlighted sm:scale-[1.03] [outline:calc(var(--height)*0.01)_solid_var(--color-gold)]"
 			)}
 		>
 			<div
@@ -111,10 +111,10 @@ function StaffNoteBox({
 			</div>
 			<div className="relative h-full w-full">
 				<div>
-					<div className="absolute top-0 h-[calc(var(--height)*0.01923)] w-full bg-[#9b180b]" />
-					<div className="absolute top-[33%] h-[calc(var(--height)*0.01923)] w-full bg-[#9b180b] [transform:translateY(-50%)]" />
-					<div className="absolute top-[66%] h-[calc(var(--height)*0.01923)] w-full bg-[#9b180b] [transform:translateY(-50%)]" />
-					<div className="absolute bottom-0 h-[calc(var(--height)*0.01923)] w-full bg-[#9b180b]" />
+					<div className="absolute top-0 h-[calc(var(--height)*0.01923)] w-full bg-gold-deep" />
+					<div className="absolute top-[33%] h-[calc(var(--height)*0.01923)] w-full bg-gold-deep [transform:translateY(-50%)]" />
+					<div className="absolute top-[66%] h-[calc(var(--height)*0.01923)] w-full bg-gold-deep [transform:translateY(-50%)]" />
+					<div className="absolute bottom-0 h-[calc(var(--height)*0.01923)] w-full bg-gold-deep" />
 				</div>
 				<Clef className="absolute top-0 left-[calc(var(--height)*0.076923)] h-[138%] w-auto pointer-events-none [transform:translate(0%,-14.1%)]" />
 				<div className="flex h-full pl-[calc(var(--height)*0.4326923)]">

@@ -6,36 +6,16 @@ import {useCallback, useEffect} from "react";
 const bgElemClass =
 	"absolute [transform:scale(var(--scale))_translate(calc(var(--offset-x)*var(--offset-max-x)*-1),calc(var(--offset-y)*var(--offset-max-y)*-1))]";
 
-const bgElems = [
-	{
-		name: "bg-sky",
-		cls: "left-0 top-0 h-auto w-full [--scale:1.1] [--offset-max-x:0%] [--offset-max-y:0%]",
-	},
-	{
-		name: "bg-mountains",
-		cls: "left-0 bottom-[36%] h-auto w-full [--scale:1] [--offset-max-x:0.1%] [--offset-max-y:0%]",
-	},
-	{
-		name: "bg-death-mountain",
-		cls: "right-0 bottom-[40%] h-auto w-[46%] [--scale:1] [--offset-max-x:0.3%] [--offset-max-y:0%]",
-	},
-	{
-		name: "bg-river-castle",
-		cls: "left-0 bottom-[24%] h-auto w-full [--scale:1.03] [--offset-max-x:0.4%] [--offset-max-y:0.5%]",
-	},
-	{
-		name: "bg-lon-lon-ranch",
-		cls: "left-[7%] bottom-[24%] h-auto w-[43%] [--scale:1.075] [--offset-max-x:1.6%] [--offset-max-y:2%]",
-	},
-	{
-		name: "bg-bottom-right",
-		cls: "right-[-1%] bottom-[16%] h-auto w-[60%] [--scale:1] [--offset-max-x:1.8%] [--offset-max-y:2%]",
-	},
-	{
-		name: "bg-bottom",
-		cls: "left-0 bottom-[-1%] h-auto w-full [--scale:1.05] [--offset-max-x:2%] [--offset-max-y:3%]",
-	},
-];
+// Fixed pseudo-random spread so fireflies don't jump around between renders.
+const fireflies = Array.from({length: 18}, (_, i) => ({
+	left: `${(i * 37 + 11) % 96}%`,
+	top: `${38 + ((i * 53) % 52)}%`,
+	delay: `${-((i * 0.83) % 6)}s`,
+	duration: `${5 + (i % 5)}s`,
+}));
+
+// Hyrule Field key art from the official OoT site assets.
+const src = "images/nintendo/OcarinaOfTime_BG_hyrule.jpg";
 
 export default function Background({isParallaxOn}: {isParallaxOn: boolean}) {
 	const [springs] = useSpring(
@@ -72,7 +52,7 @@ export default function Background({isParallaxOn}: {isParallaxOn: boolean}) {
 	return (
 		<animated.div
 			aria-hidden="true"
-			className="fixed top-1/2 left-1/2 w-full aspect-[3408/2058] -translate-x-1/2 -translate-y-1/2 overflow-hidden pointer-events-none select-none opacity-90 z-[-10000] [@media(max-aspect-ratio:3408/2058)]:h-full [@media(max-aspect-ratio:3408/2058)]:w-auto"
+			className="fixed inset-0 overflow-hidden pointer-events-none select-none z-[-10000]"
 			style={
 				!isParallaxOn
 					? ({"--offset-x": 0, "--offset-y": 0} as React.CSSProperties)
@@ -82,12 +62,27 @@ export default function Background({isParallaxOn}: {isParallaxOn: boolean}) {
 						} as React.CSSProperties)
 			}
 		>
-			{bgElems.map((elem) => (
-				<img
-					key={elem.name}
-					alt=""
-					className={clsx(bgElemClass, elem.cls)}
-					src={`images/background/${elem.name}.webp`}
+			<img
+				alt=""
+				className={clsx(
+					bgElemClass,
+					"left-0 top-0 h-full w-full object-cover [--scale:1.06] [--offset-max-x:1.5%] [--offset-max-y:1.5%]"
+				)}
+				src={src}
+			/>
+			{/* Darken and warm the photo so panels and text stay readable on top of it. */}
+			<div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_45%,rgba(0,0,0,0.05),rgba(10,7,3,0.7))]" />
+			<div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,7,3,0.15),rgba(10,7,3,0.55))]" />
+			{fireflies.map((style, i) => (
+				<span
+					key={i}
+					className="absolute size-[3px] rounded-full bg-firefly animate-firefly blur-[0.5px] [box-shadow:0_0_10px_4px_rgba(240,236,140,0.35)]"
+					style={{
+						left: style.left,
+						top: style.top,
+						animationDelay: style.delay,
+						animationDuration: style.duration,
+					}}
 				/>
 			))}
 		</animated.div>

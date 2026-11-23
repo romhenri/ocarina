@@ -4,7 +4,7 @@ import IconX from "@/images/icons/x.svg?react";
 import clsx from "clsx";
 import {headingClass} from "./styles";
 
-const infoLinkClass = "text-[#3280fe] hover:text-[#ffbe0b] focus:text-[#ffbe0b]";
+const infoLinkClass = "text-leaf hover:text-leaf-glow focus:text-leaf-glow";
 
 export default function ModalInfo({isTouch}: {isTouch: boolean}) {
 	const socialIconClass = clsx(

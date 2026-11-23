@@ -76,7 +76,7 @@ export function HeroSummary({
 	onBackToPicker: () => void;
 }) {
 	return (
-		<div className="flex w-full max-w-sm flex-col items-center gap-[18px] rounded-[18px] bg-black/75 px-[26px] py-[28px] text-center">
+		<div className="flex w-full max-w-sm flex-col items-center gap-[18px] rounded-[3px] forest-panel px-[26px] py-[28px] text-center">
 			<span className="text-[13px] tracking-[0.2em] text-white/60 uppercase">{songName}</span>
 
 			{result.isNewBest && <span className="new-record-text text-[20px]">New Record!</span>}
